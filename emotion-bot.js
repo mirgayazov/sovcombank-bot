@@ -15,12 +15,14 @@ class EmotionBot {
 
     answer(message) {
         if (message.text.split('').length !== 2) {
+            // занулить беседу
             return this.errorMessage
         }
 
         let emotion = this.classify(message.text);
 
         if (!emotion) {
+            // занулить беседу
             return this.errorMessage
         }
 

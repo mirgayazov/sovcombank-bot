@@ -75,6 +75,30 @@ const initialize = async () => {
             }
         }
     }
+
+    for (let i = 0; i < answersGroups.length; i++) {
+        const answersGroup = answersGroups[i];
+        const [emotionPrefix, options] = answersGroup;
+
+        for (let j = 0; j < options.length; j++) {
+            const option = options[j];
+            const [emotionPostfix, answers] = option;
+            const emotion = `${emotionPrefix}_${emotionPostfix}`;
+
+            for (let k = 0; k < answers.length; k++) {
+                const answer = answers[k];
+
+                try {
+                    await db.one(`insert into "answers" (text, emotion) values ($1, $2) returning id`, [answer, emotion])
+                        .then(res => {
+                            console.log(res.id)
+                        })
+                } catch (e) {
+                    console.log(e)
+                }
+            }
+        }
+    }
 };
 
 db.connect()
