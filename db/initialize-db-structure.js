@@ -9,7 +9,7 @@ const createScript = `
 -- Dumped from database version 13.6
 -- Dumped by pg_dump version 13.6
 
--- Started on 2022-06-16 17:52:35
+-- Started on 2022-06-17 11:36:07
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -25,7 +25,7 @@ SET row_security = off;
 SET default_tablespace = '';
 
 --
--- TOC entry 201 (class 1259 OID 49538)
+-- TOC entry 200 (class 1259 OID 49596)
 -- Name: answers; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -39,7 +39,7 @@ CREATE TABLE public.answers (
 ALTER TABLE public.answers OWNER TO postgres;
 
 --
--- TOC entry 200 (class 1259 OID 49536)
+-- TOC entry 201 (class 1259 OID 49602)
 -- Name: answers_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -54,8 +54,8 @@ CREATE SEQUENCE public.answers_id_seq
 ALTER TABLE public.answers_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3025 (class 0 OID 0)
--- Dependencies: 200
+-- TOC entry 3012 (class 0 OID 0)
+-- Dependencies: 201
 -- Name: answers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -63,7 +63,7 @@ ALTER SEQUENCE public.answers_id_seq OWNED BY public.answers.id;
 
 
 --
--- TOC entry 203 (class 1259 OID 49549)
+-- TOC entry 202 (class 1259 OID 49604)
 -- Name: emoji; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -77,7 +77,7 @@ CREATE TABLE public.emoji (
 ALTER TABLE public.emoji OWNER TO postgres;
 
 --
--- TOC entry 202 (class 1259 OID 49547)
+-- TOC entry 203 (class 1259 OID 49610)
 -- Name: emoji_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -92,8 +92,8 @@ CREATE SEQUENCE public.emoji_id_seq
 ALTER TABLE public.emoji_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3026 (class 0 OID 0)
--- Dependencies: 202
+-- TOC entry 3013 (class 0 OID 0)
+-- Dependencies: 203
 -- Name: emoji_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -101,16 +101,15 @@ ALTER SEQUENCE public.emoji_id_seq OWNED BY public.emoji.id;
 
 
 --
--- TOC entry 206 (class 1259 OID 49562)
+-- TOC entry 204 (class 1259 OID 49612)
 -- Name: messages; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.messages (
     id bigint NOT NULL,
     text text NOT NULL,
-    user_id bigint NOT NULL,
+    chat_id bigint NOT NULL,
     emotion text,
-    session_id bigint NOT NULL,
     "time" timestamp with time zone NOT NULL
 );
 
@@ -118,7 +117,7 @@ CREATE TABLE public.messages (
 ALTER TABLE public.messages OWNER TO postgres;
 
 --
--- TOC entry 204 (class 1259 OID 49558)
+-- TOC entry 205 (class 1259 OID 49618)
 -- Name: messages_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -133,8 +132,8 @@ CREATE SEQUENCE public.messages_id_seq
 ALTER TABLE public.messages_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3027 (class 0 OID 0)
--- Dependencies: 204
+-- TOC entry 3014 (class 0 OID 0)
+-- Dependencies: 205
 -- Name: messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -142,31 +141,7 @@ ALTER SEQUENCE public.messages_id_seq OWNED BY public.messages.id;
 
 
 --
--- TOC entry 207 (class 1259 OID 49572)
--- Name: messages_session_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.messages_session_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.messages_session_id_seq OWNER TO postgres;
-
---
--- TOC entry 3028 (class 0 OID 0)
--- Dependencies: 207
--- Name: messages_session_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.messages_session_id_seq OWNED BY public.messages.session_id;
-
-
---
--- TOC entry 205 (class 1259 OID 49560)
+-- TOC entry 206 (class 1259 OID 49622)
 -- Name: messages_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -181,54 +156,16 @@ CREATE SEQUENCE public.messages_user_id_seq
 ALTER TABLE public.messages_user_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3029 (class 0 OID 0)
--- Dependencies: 205
+-- TOC entry 3015 (class 0 OID 0)
+-- Dependencies: 206
 -- Name: messages_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.messages_user_id_seq OWNED BY public.messages.user_id;
+ALTER SEQUENCE public.messages_user_id_seq OWNED BY public.messages.chat_id;
 
 
 --
--- TOC entry 209 (class 1259 OID 49584)
--- Name: sessions; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.sessions (
-    id bigint NOT NULL,
-    start_time timestamp with time zone NOT NULL,
-    end_time timestamp with time zone NOT NULL
-);
-
-
-ALTER TABLE public.sessions OWNER TO postgres;
-
---
--- TOC entry 208 (class 1259 OID 49582)
--- Name: sessions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.sessions_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.sessions_id_seq OWNER TO postgres;
-
---
--- TOC entry 3030 (class 0 OID 0)
--- Dependencies: 208
--- Name: sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.sessions_id_seq OWNED BY public.sessions.id;
-
-
---
--- TOC entry 2875 (class 2604 OID 49541)
+-- TOC entry 2867 (class 2604 OID 49629)
 -- Name: answers id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -236,7 +173,7 @@ ALTER TABLE ONLY public.answers ALTER COLUMN id SET DEFAULT nextval('public.answ
 
 
 --
--- TOC entry 2876 (class 2604 OID 49552)
+-- TOC entry 2868 (class 2604 OID 49630)
 -- Name: emoji id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -244,7 +181,7 @@ ALTER TABLE ONLY public.emoji ALTER COLUMN id SET DEFAULT nextval('public.emoji_
 
 
 --
--- TOC entry 2877 (class 2604 OID 49565)
+-- TOC entry 2869 (class 2604 OID 49631)
 -- Name: messages id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -252,31 +189,15 @@ ALTER TABLE ONLY public.messages ALTER COLUMN id SET DEFAULT nextval('public.mes
 
 
 --
--- TOC entry 2878 (class 2604 OID 49566)
--- Name: messages user_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2870 (class 2604 OID 49632)
+-- Name: messages chat_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.messages ALTER COLUMN user_id SET DEFAULT nextval('public.messages_user_id_seq'::regclass);
-
-
---
--- TOC entry 2879 (class 2604 OID 49574)
--- Name: messages session_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.messages ALTER COLUMN session_id SET DEFAULT nextval('public.messages_session_id_seq'::regclass);
+ALTER TABLE ONLY public.messages ALTER COLUMN chat_id SET DEFAULT nextval('public.messages_user_id_seq'::regclass);
 
 
 --
--- TOC entry 2880 (class 2604 OID 49587)
--- Name: sessions id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.sessions ALTER COLUMN id SET DEFAULT nextval('public.sessions_id_seq'::regclass);
-
-
---
--- TOC entry 2882 (class 2606 OID 49546)
+-- TOC entry 2872 (class 2606 OID 49636)
 -- Name: answers answers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -285,7 +206,7 @@ ALTER TABLE ONLY public.answers
 
 
 --
--- TOC entry 2884 (class 2606 OID 49557)
+-- TOC entry 2874 (class 2606 OID 49638)
 -- Name: emoji emoji_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -294,7 +215,7 @@ ALTER TABLE ONLY public.emoji
 
 
 --
--- TOC entry 2886 (class 2606 OID 49571)
+-- TOC entry 2876 (class 2606 OID 49640)
 -- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -302,25 +223,7 @@ ALTER TABLE ONLY public.messages
     ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
 
 
---
--- TOC entry 2888 (class 2606 OID 49589)
--- Name: sessions sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.sessions
-    ADD CONSTRAINT sessions_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 2889 (class 2606 OID 49590)
--- Name: messages sessions_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.messages
-    ADD CONSTRAINT sessions_fk FOREIGN KEY (session_id) REFERENCES public.sessions(id) NOT VALID;
-
-
--- Completed on 2022-06-16 17:52:35
+-- Completed on 2022-06-17 11:36:07
 
 --
 -- PostgreSQL database dump complete
